@@ -1,10 +1,10 @@
 package org.example;
 
-import com.beust.jcommander.JCommander; // Library for command-line argument parsing
-import com.beust.jcommander.Parameter; // Annotation for defining command-line parameters
-import lombok.extern.slf4j.Slf4j; // Lombok annotation for logging
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.Parameter;
+import lombok.extern.slf4j.Slf4j;
 
-@Slf4j // Enables logging in this class
+@Slf4j
 public class GreetingServerApplication {
 
     // Command-line parameter for the port to listen on, with a default value of 6666
@@ -34,13 +34,8 @@ public class GreetingServerApplication {
 
     // Method to start the greeting server
     private void run() {
-        // Uncomment the following line to log server start information
-        // log.info("Starting server on port {} with timeout {}", port, timeout);
-
-        // Create a new GreetingServer instance with the specified port and timeout
+        log.info("Starting server on port {} with timeout {}", port, timeout);
         GreetingServer greetingServer = new GreetingServer(port, timeout);
-
-        // Start the greeting server
         greetingServer.start();
     }
 }

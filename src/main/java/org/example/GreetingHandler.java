@@ -1,17 +1,16 @@
 package org.example;
 
-import org.example.util.ParseUtil; // Importing utility class to parse input
-
-import java.io.BufferedReader; // Class for reading text from an input stream
-import java.io.IOException; // Exception handling for I/O operations
-import java.io.InputStreamReader; // Converts InputStream to Reader
-import java.io.PrintWriter; // Class for writing text to an output stream
-import java.net.Socket; // Class for handling client sockets
+import org.example.util.ParseUtil;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 // Class implementing Runnable to handle client connections
 public class GreetingHandler implements Runnable {
-    private Socket clientSocket; // Socket to handle client connection
-    private int timeout; // Timeout value for client connection in seconds
+    private Socket clientSocket;
+    private int timeout;
 
     // Constructor to initialize the client socket and timeout
     public GreetingHandler(Socket clientSocket, int timeout) {
@@ -30,11 +29,7 @@ public class GreetingHandler implements Runnable {
         ) {
             // Set the socket timeout (in milliseconds)
             clientSocket.setSoTimeout(timeout * 1000);
-
-            // Send a response indicating the server is ready
             out.println("200 server ready");
-
-            // Variables to store the client-provided name and location
             String line;
             String name = "";
             String location = "";
@@ -44,7 +39,6 @@ public class GreetingHandler implements Runnable {
                 // Parse the client input using ParseUtil
                 GreetingCommand cmd = ParseUtil.parseInput(line);
 
-                // Handle the command based on the parsed input
                 switch (cmd.getName().toUpperCase()) {
 
                     case "NAME":
@@ -58,7 +52,12 @@ public class GreetingHandler implements Runnable {
                         break;
 
                     case "GREET":
-                        out.printf("Hello %s of %s%n", name, location);
+                        if (name.isEmpty() || location.isEmpty()) {
+                            out.println("400 Bad Request");
+                        }
+                        else {
+                            out.printf("Hello %s of %s%n", name, location);
+                        }
                         break;
 
                     case "QUIT":
@@ -72,7 +71,6 @@ public class GreetingHandler implements Runnable {
             }
 
         } catch (IOException e) {
-            // Handle any I/O exceptions by wrapping them in a runtime exception
             throw new RuntimeException(e);
         }
     }

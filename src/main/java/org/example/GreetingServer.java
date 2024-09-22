@@ -1,25 +1,23 @@
 package org.example;
 
-import lombok.AllArgsConstructor; // Lombok annotation for generating a constructor with parameters
-import lombok.extern.slf4j.Slf4j; // Lombok annotation for logging
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
-import java.io.IOException; // Exception handling for I/O operations
-import java.net.ServerSocket; // Class for creating a server socket
-import java.net.Socket; // Class for handling client sockets
-
-@Slf4j // Enables logging in this class
-@AllArgsConstructor // Generates a constructor that takes parameters for all fields
+@Slf4j
+@AllArgsConstructor
 public class GreetingServer {
-    private int port; // Port on which the server listens for incoming connections
-    private int timeout; // Idle timeout value for client connections
+    private int port;
+    private int timeout;
 
     // Method to start the greeting server
     void start() {
         // Log the server's starting configuration
         log.info("Starting server on port {} with timeout {}", port, timeout);
 
-        try (ServerSocket serverSocket = new ServerSocket(port)) { // Create a server socket
-            // Loop indefinitely to accept client connections
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
             while (true) {
                 // Wait for a client to connect
                 Socket clientSocket = serverSocket.accept();
