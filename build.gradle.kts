@@ -4,6 +4,7 @@ plugins {
     // Apply the application plugin for building an executable application
     // application: This applies the Application plugin, which provides support for running the application from the command line.
     application
+    kotlin("jvm")
 }
 
 // Defines the group ID for the project, typically representing the organization or company
@@ -43,6 +44,7 @@ dependencies {
 
     // Mockito for creating mock objects in tests
     testImplementation("org.mockito:mockito-core:5.13.0") // Add Mockito for testing with mocks
+    implementation(kotlin("stdlib-jdk8"))
 }
 
 // Configure the JAR task
@@ -73,4 +75,7 @@ tasks.jar {
 tasks.test {
     // Use JUnit platform for running tests
     useJUnitPlatform()
+}
+kotlin {
+    jvmToolchain(21)
 }
